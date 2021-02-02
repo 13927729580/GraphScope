@@ -777,7 +777,29 @@
         <span class="p">)</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
             <span class="n">sess</span><span class="o">.</span><span class="n">session_id</span><span class="p">,</span> <span class="n">VineyardObject</span><span class="p">(</span><span class="n">object_id</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">vineyard</span><span class="o">.</span><span class="n">ObjectID</span><span class="p">(</span><span class="n">graph_id</span><span class="p">)))</span>
-        <span class="p">)</span></div></div>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Graph.draw"><a class="viewcode-back" href="../../../reference/graph.html#graphscope.framework.graph.Graph.draw">[docs]</a>    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vertices</span><span class="p">,</span> <span class="n">hop</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Visualize the graph data in the result cell when the draw functions are invoked</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vertices (list): selected vertices.</span>
+<span class="sd">            hop (int): draw induced subgraph with hop extension. Defaults to 1.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A GraphModel.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">ipygraphin</span> <span class="k">import</span> <span class="n">GraphModel</span>
+
+        <span class="n">sess</span> <span class="o">=</span> <span class="n">get_session_by_id</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">session_id</span><span class="p">)</span>
+        <span class="n">interactive_query</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">gremlin</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="n">graph</span> <span class="o">=</span> <span class="n">GraphModel</span><span class="p">()</span>
+        <span class="n">graph</span><span class="o">.</span><span class="n">queryGraphData</span><span class="p">(</span><span class="n">vertices</span><span class="p">,</span> <span class="n">hop</span><span class="p">,</span> <span class="n">interactive_query</span><span class="p">)</span>
+
+        <span class="c1"># listen on the 1~2 hops operation of node</span>
+        <span class="n">graph</span><span class="o">.</span><span class="n">on_msg</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">queryNeighbor</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">graph</span></div></div>
 </pre></div>
 
            </div>
